@@ -22,7 +22,12 @@ public class UserResource {
 
     @GetMapping(path = "/users/{userId}")
     public User retrieveUser(@PathVariable int userId) {
-        return service.findOne(userId);
+        User user = service.findOne(userId);
+        if(user==null)
+            throw new UserNotFoundException("id-" + userId);
+
+        return user;
+
     }
 
     @PostMapping("/users")
