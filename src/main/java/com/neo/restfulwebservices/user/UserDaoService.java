@@ -19,9 +19,11 @@ public class UserDaoService {
         users.add(new User(3, "Jack", new Date()));
     }
 
+
     public List<User> findAll() {
         return users;
-    };
+    }
+
 
     public User save(User user) {
         if(user.getId()==null){
