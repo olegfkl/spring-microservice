@@ -1,5 +1,6 @@
-package com.neo.restfulwebservices.user;
+package com.neo.restfulwebservices.services;
 
+import com.neo.restfulwebservices.user.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

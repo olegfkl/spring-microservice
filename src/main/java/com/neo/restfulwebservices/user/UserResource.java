@@ -1,5 +1,8 @@
 package com.neo.restfulwebservices.user;
 
+import com.neo.restfulwebservices.exception.UserNotFoundException;
+import com.neo.restfulwebservices.services.PostDaoService;
+import com.neo.restfulwebservices.services.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +16,19 @@ import java.util.List;
 public class UserResource {
 
     @Autowired
-    private UserDaoService service;
+    private UserDaoService userService;
+
+    @Autowired
+    private PostDaoService postService;
 
     @GetMapping(path = "/users")
     public List<User> retrieveAllUsers() {
-        return service.findAll();
+        return userService.findAll();
     }
 
     @GetMapping(path = "/users/{userId}")
     public User retrieveUser(@PathVariable int userId) {
-        User user = service.findOne(userId);
+        User user = userService.findOne(userId);
         if (user == null)
             throw new UserNotFoundException("id-" + userId);
         return user;
@@ -31,7 +37,7 @@ public class UserResource {
 
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@RequestBody User user) {
-        User save = service.save(user);
+        User save = userService.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -39,5 +45,11 @@ public class UserResource {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/users/{userId}/posts")
+    public List<Post> retrieveAllPosts(@PathVariable int userId) {
+        return postService.findAllPosts(userId);
+        //add logs
     }
 }

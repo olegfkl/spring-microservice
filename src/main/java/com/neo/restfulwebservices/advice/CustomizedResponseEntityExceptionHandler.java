@@ -1,7 +1,8 @@
-package com.neo.restfulwebservices.exception;
+package com.neo.restfulwebservices.advice;
 
 
-import com.neo.restfulwebservices.user.UserNotFoundException;
+import com.neo.restfulwebservices.exception.ExceptionResponse;
+import com.neo.restfulwebservices.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
