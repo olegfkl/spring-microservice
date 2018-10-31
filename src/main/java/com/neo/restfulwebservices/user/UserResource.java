@@ -4,6 +4,7 @@ import com.neo.restfulwebservices.exception.UserNotFoundException;
 import com.neo.restfulwebservices.services.PostDaoService;
 import com.neo.restfulwebservices.services.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -51,5 +52,12 @@ public class UserResource {
     public List<Post> retrieveAllPosts(@PathVariable int userId) {
         return postService.findAllPosts(userId);
         //add logs
+    }
+
+    @PostMapping("/users/{userId}/posts")
+    public ResponseEntity<Post> createPost(@PathVariable int userId, @RequestBody Post post){
+        Post response = postService.save(post, userId);
+        return new ResponseEntity<Post>(response, HttpStatus.CREATED);
+        //add location
     }
 }

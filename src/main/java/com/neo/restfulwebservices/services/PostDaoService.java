@@ -11,6 +11,8 @@ public class PostDaoService {
 
     private static List<Post> posts = new ArrayList<>();
 
+    private Integer postCount = 5;
+
     static {
         posts.add(new Post(1, 1, "Hello beautiful world"));
         posts.add(new Post(2, 2, "Such a bad day"));
@@ -26,5 +28,14 @@ public class PostDaoService {
             }
         }
         return list;
+    }
+
+    public Post save(Post post, int userId) {
+        if (post.getId() == null) {
+            post.setId(postCount++);
+        }
+        post.setUser(userId);
+        posts.add(post);
+        return post;
     }
 }
